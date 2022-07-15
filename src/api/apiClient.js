@@ -7,9 +7,10 @@ const urls = {
 
 const getMensChlothes = async () => {
   try {
-    const { data } = axios.get(HOST + urls.MENS_CLOTHING);
-    console.log("daat", data);
-    debugger;
+    const url = HOST + urls.MENS_CLOTHING;
+    console.log(url);
+    const { data } = await axios.get(url);
+
     return data;
   } catch (err) {
     return err;

@@ -1,16 +1,18 @@
 import "./checkout-item.styles.scss";
 import { removeItem, incQuantity, decQauntity } from "../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CheckoutItem = ({ item }) => {
   const dispatch = useDispatch();
-  const { name, price, quantity, imageUrl } = item;
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log(cartItems);
+  const { Name, price, quantity, image } = item;
   return (
     <div className="checkout-item">
       <div className="image-continer">
-        <img alt="item" src={imageUrl} />
+        <img alt="item" src={image} width="80px" />
       </div>
-      <div className="name">{name}</div>
+      <div className="name">{Name}</div>
       <div className="price">{price}</div>
       <div className="quantity">
         <div className="arrow" onClick={() => dispatch(decQauntity(item))}>
