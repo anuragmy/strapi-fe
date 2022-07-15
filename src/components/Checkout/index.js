@@ -1,15 +1,19 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { connect } from "react-redux";
-import { message, Empty } from "antd";
+import { useSelector } from "react-redux";
+import { Empty } from "antd";
 import StripeCheckout from "react-stripe-checkout";
 import "./checkout.styles.scss";
 import CheckoutItem from "./CheckoutItem";
 import Crown from "../../assets/crown.svg";
-import Cart from "../../assets/cart.svg";
 
-const Checkout = ({ total, items = [] }) => {
+const Checkout = () => {
   const key = process.env.REACT_APP_STRIPE;
+  const items = useSelector((state) => state.cart.items);
+  const total = items.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0
+  );
 
   const onToken = (token) => {
     alert("Payment Success");
@@ -68,10 +72,4 @@ const Checkout = ({ total, items = [] }) => {
   );
 };
 
-const mpaStateToProps = ({ cart: { items }, auth: { signedIn } }) => ({
-  total: items.reduce((acc, item) => acc + item.quantity * item.price, 0),
-  items,
-  signedIn,
-});
-
-export default connect(mpaStateToProps, null)(Checkout);
+export default Checkout;
